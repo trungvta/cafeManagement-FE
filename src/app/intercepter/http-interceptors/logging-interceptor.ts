@@ -13,6 +13,7 @@ export class LoggingInterceptor implements HttpInterceptor {
     constructor(private messenger: MessageService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        console.log('HttpRequest', req);
         const started = Date.now();
         let ok: string;
 
@@ -27,7 +28,7 @@ export class LoggingInterceptor implements HttpInterceptor {
         .pipe(
             tap({
                 // Succeeds when there is a response; ignore other events
-                next: (event) => (ok = event instanceof HttpResponse ? 'succeeded' : ''),
+                next: (event) => {(ok = event instanceof HttpResponse ? 'succeeded' : '')},
                 // Operation failed; error is an HttpErrorResponse
                 error: (error) => (ok = 'failed')
             }),
@@ -36,8 +37,12 @@ export class LoggingInterceptor implements HttpInterceptor {
                 const elapsed = Date.now() - started;
                 const msg = `${req.method} "${req.urlWithParams}" ${ok} in ${elapsed} ms.`;
                 this.messenger.add(msg);
+
+                console.log(msg);
             }),
             catchError((error: any) => {
+                console.error(error);
+                this.messenger.add(error);
                 return throwError(error);
             })
         );

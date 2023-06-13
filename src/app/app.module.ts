@@ -13,11 +13,16 @@ import { SharedModule } from './shared/shared.module';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 
 // Loader
 import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, PB_DIRECTION } from 'ngx-ui-loader';
+
+// Message
+import { MessageService } from './services/message.service';
+import { LoggingInterceptor } from './intercepter/http-interceptors/logging-interceptor';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const ngxUiloaderConfig: NgxUiLoaderConfig = {
   text: "Loading...",
@@ -40,7 +45,8 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     FullComponent,
     AppHeaderComponent,
     AppSidebarComponent,
-    SignupComponent
+    SignupComponent,
+    ForgotPasswordComponent
   ],
 
   imports: [
@@ -57,7 +63,14 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderModule.forRoot(ngxUiloaderConfig)
   ],
   
-  providers: [],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

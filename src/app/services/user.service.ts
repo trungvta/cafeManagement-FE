@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { finalize, tap } from 'rxjs/operators';
+
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs'; 
@@ -19,14 +21,16 @@ export class UserService {
 
   signup(data: any): Observable<any> {
     const url = this._url + "/user/signup";
-    const options = {
-      headers: new HttpHeaders().set('ContentType',"application/json")
-    }
-
-    return this.httpClient.post(url, data, options).pipe(
-      catchError((error: any) => {
-        return throwError('Đã xảy ra lỗi trong quá trình đăng ký!');
-      })
-    );
+    return this.httpClient.post(url, data);
   }
+
+  forgotPassword(data: any): Observable<any> {
+    const url = this._url + "/user/forgotPassword";
+
+    console.log(url);
+    console.log(data);
+
+    return this.httpClient.post(url, data)
+  }
+
 }

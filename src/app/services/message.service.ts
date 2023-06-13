@@ -8,6 +8,6 @@ export class MessageService {
   constructor() { }
 
   add(message: any): void {
-
+    console.log(message)
   }
 }
