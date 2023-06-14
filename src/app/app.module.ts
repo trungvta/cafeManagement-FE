@@ -23,6 +23,8 @@ import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, PB_DIRECTION } from 'ngx
 import { MessageService } from './services/message.service';
 import { LoggingInterceptor } from './intercepter/http-interceptors/logging-interceptor';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LoginComponent } from './login/login.component';
+import { TokenInterceptorInterceptor } from './intercepter/token/token-interceptor.interceptor';
 
 const ngxUiloaderConfig: NgxUiLoaderConfig = {
   text: "Loading...",
@@ -46,7 +48,8 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     AppHeaderComponent,
     AppSidebarComponent,
     SignupComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    LoginComponent
   ],
 
   imports: [
@@ -65,9 +68,14 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
   
   providers: [
     MessageService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: LoggingInterceptor,
+    //   multi: true
+    // },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoggingInterceptor,
+      useClass: TokenInterceptorInterceptor,
       multi: true
     }
   ],

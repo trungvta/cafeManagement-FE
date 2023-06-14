@@ -24,13 +24,19 @@ export class UserService {
     return this.httpClient.post(url, data);
   }
 
+  login(data: any): Observable<any> {
+    const url = this._url + "/user/login";
+    return this.httpClient.post(url, data);
+  }
+
   forgotPassword(data: any): Observable<any> {
     const url = this._url + "/user/forgotPassword";
+    return this.httpClient.post(url, data);
+  }
 
-    console.log(url);
-    console.log(data);
-
-    return this.httpClient.post(url, data)
+  changePassword(data: any): Observable<any> {
+    const url = this._url + "/user/changePassword";
+    return this.httpClient.post(url, data);
   }
 
 }
