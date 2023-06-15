@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       complete: () => {
         this._ngxServices.stop();
         this._dialogRef.close();
-        this._router.navigate(['/']);
+        this._router.navigate(['/cafe/dashboard']);
       }
     })
   }

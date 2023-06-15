@@ -6,13 +6,22 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 import { MaterialModule } from '../shared/material-module';
 
+import { MatCardModule } from '@angular/material/card';
+
+console.log('DashboardModule');
+console.log('DashboardModule 2', DashboardRoutes);
+
+
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    RouterModule.forChild(DashboardRoutes)
+    RouterModule.forChild(DashboardRoutes),
+
   ],
-  declarations: [DashboardComponent]
+  declarations: [
+    DashboardComponent
+]
 })
 export class DashboardModule { }

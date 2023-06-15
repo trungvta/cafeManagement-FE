@@ -11,6 +11,9 @@ import { MaterialRoutes } from './material.routing';
 import { MaterialModule } from '../shared/material-module';
 import { ViewBillProductsComponent } from './dialog/view-bill-products/view-bill-products.component';
 
+
+console.log('MaterialComponentsModule');
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +27,9 @@ import { ViewBillProductsComponent } from './dialog/view-bill-products/view-bill
   ],
   providers: [],
   declarations: [
-    ViewBillProductsComponent    
-  ]
+    ViewBillProductsComponent,
+  ],
+  entryComponents: []
 })
+
 export class MaterialComponentsModule {}

@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { CanActivate, RouterStateSnapshot } from '@angular/router';
 import { SnackbarService } from './snackbar.service';
 
 import jwt_decode from 'jwt-decode';
 import { GlobalConstants } from '../shared/global-constants';
+import { Observable } from 'rxjs';
+
+console.log('================================================== RouteGuardService');
 
 @Injectable({
   providedIn: 'root'
 })
-export class RouteGuardService {
+export class RouteGuardService implements CanActivate {
 
   constructor(
     public _auth: AuthService,
@@ -19,10 +23,10 @@ export class RouteGuardService {
     console.log('================================================== 1');
   }
 
-  canActivate(router: ActivatedRouteSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     console.log('================================================== 2');
 
-    let expectedRoleArray = router.data;
+    let expectedRoleArray = route.data;
     expectedRoleArray = expectedRoleArray.expectedRole;
 
     const token: any = localStorage.getItem('token');
@@ -59,5 +63,8 @@ export class RouteGuardService {
       localStorage.clear();
       return false;
     }
+
+    return false;
   }
+
 }
