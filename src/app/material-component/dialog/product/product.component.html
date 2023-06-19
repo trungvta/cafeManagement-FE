@@ -1,0 +1,77 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span class="title-center">
+            {{ dialogData.action }} Product
+        </span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form">
+        <div fxFlex fxLayout="column">
+
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>name</mat-label>
+                    <input matInput formControlName="name">
+    
+                    <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid">
+                        <span *ngIf="form.controls.name.errors.required">
+                            The field is name
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>price</mat-label>
+                    <input matInput formControlName="price">
+    
+                    <mat-error *ngIf="form.controls.price.touched && form.controls.price.invalid">
+                        <span *ngIf="form.controls.price.errors.required">
+                            The field is mandatory
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="categoryId">
+                        <mat-option *ngFor="let category of categorys" [value]="category.id">
+                            {{ category.name }}
+                        </mat-option>
+                    </mat-select>
+    
+                    <mat-error *ngIf="form.controls.categoryId.touched && form.controls.categoryId.invalid">
+                        <span *ngIf="form.controls.categoryId.errors.required">
+                            The field is category
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>description</mat-label>
+                <input matInput formControlName="description">
+
+                <mat-error *ngIf="form.controls.description.touched && form.controls.description.invalid">
+                    <span *ngIf="form.controls.description.errors.required">
+                        The field is mandatory
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit(form)"
+        [disabled]="!(form.valid && form.dirty)">
+        {{ dialogData.action }}
+    </button>
+    <button mat-raised-button color="primary" mat-dialog-close>
+        Close
+    </button>
+</mat-dialog-actions>

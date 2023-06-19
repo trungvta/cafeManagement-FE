@@ -1,1 +1,38 @@
-<p>category works!</p>
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span class="title-center">
+            {{ dialogData.action }} Category
+        </span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form">
+        <div fxFlex fxLayout="column">
+
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>name</mat-label>
+                    <input matInput formControlName="name">
+    
+                    <mat-error *ngIf="form.controls.name.touched && form.controls.name.invalid">
+                        <span *ngIf="form.controls.name.errors.required">
+                            The field is name
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit(form)"
+        [disabled]="!(form.valid && form.dirty)">
+        {{ dialogData.action }}
+    </button>
+    <button mat-raised-button color="primary" mat-dialog-close>
+        Close
+    </button>
+</mat-dialog-actions>

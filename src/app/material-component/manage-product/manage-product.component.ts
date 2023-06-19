@@ -6,26 +6,27 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CategoryService } from 'src/app/services/category.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
-import { CategoryComponent } from '../dialog/category/category.component';
+import { ProductComponent } from '../dialog/product/product.component';
+import { ProductService } from 'src/app/services/product.service';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
 
 @Component({
-  selector: 'app-manage-category',
-  templateUrl: './manage-category.component.html',
-  styleUrls: ['./manage-category.component.scss']
+  selector: 'app-manage-product',
+  templateUrl: './manage-product.component.html',
+  styleUrls: ['./manage-product.component.scss']
 })
-export class ManageCategoryComponent implements OnInit {
+export class ManageProductComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'edit'];
+  displayedColumns: string[] = ['name', 'categoryName', 'description', 'price', 'edit'];
   dataSource: any;
   responseMessage: any;
 
   constructor(
-    private _categoryService: CategoryService,
     private _router: Router,
     private _dialog: MatDialog,
     private _ngxService: NgxUiLoaderService,
-    private _snackbarService: SnackbarService
+    private _snackbarService: SnackbarService,
+    private _productService: ProductService
   ) { }
 
   ngOnInit(): void {
@@ -34,8 +35,10 @@ export class ManageCategoryComponent implements OnInit {
   }
 
   tableData(): void {
-    this._categoryService.get().subscribe({
+    this._productService.get().subscribe({
       next: (res: any) => {
+
+        console.log(res)
         this.dataSource = new MatTableDataSource(res);
       },
       error: (err) => {
@@ -60,12 +63,12 @@ export class ManageCategoryComponent implements OnInit {
     };
 
     dialogConfig.width = '500px';
-    const dialogRef = this._dialog.open(CategoryComponent, dialogConfig);
+    const dialogRef = this._dialog.open(ProductComponent, dialogConfig);
     this._router.events.subscribe(_ => {
       dialogRef.close();
     });
 
-    const sub = dialogRef.componentInstance.onAddCategory.subscribe(_ => {
+    const sub = dialogRef.componentInstance.onAddProduct.subscribe(_ => {
       this.tableData();
     });
   }
@@ -78,12 +81,12 @@ export class ManageCategoryComponent implements OnInit {
     };
 
     dialogConfig.width = '500px';
-    const dialogRef = this._dialog.open(CategoryComponent, dialogConfig);
+    const dialogRef = this._dialog.open(ProductComponent, dialogConfig);
     this._router.events.subscribe(_ => {
       dialogRef.close();
     });
     
-    const sub = dialogRef.componentInstance.onEditCategory.subscribe(_ => {
+    const sub = dialogRef.componentInstance.onEditProduct.subscribe(_ => {
       this.tableData();
     });
   }
@@ -104,7 +107,7 @@ export class ManageCategoryComponent implements OnInit {
   }
 
   deleteProduct(id: number): void {
-    this._categoryService.delete(id).subscribe({
+    this._productService.delete(id).subscribe({
       next: (response: any) => {
         this.responseMessage = response?.message;
         this._snackbarService.openSnackBar(this.responseMessage, GlobalConstants.success);

@@ -14,6 +14,8 @@ import { CategoryComponent } from './dialog/category/category.component';
 import { ChangePasswordComponent } from './dialog/change-password/change-password.component';
 import { ConfirmationComponent } from './dialog/confirmation/confirmation.component';
 import { ManageCategoryComponent } from './manage-category/manage-category.component';
+import { ProductComponent } from './dialog/product/product.component';
+import { ManageProductComponent } from './manage-product/manage-product.component';
 
 
 console.log('MaterialComponentsModule');
@@ -36,6 +38,8 @@ console.log('MaterialComponentsModule');
     ChangePasswordComponent,
     ConfirmationComponent,
     ManageCategoryComponent,
+    ProductComponent,
+    ManageProductComponent,
   ],
   entryComponents: []
 })

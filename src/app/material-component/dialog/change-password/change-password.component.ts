@@ -14,7 +14,7 @@ import { GlobalConstants } from '../../../shared/global-constants';
 export class ChangePasswordComponent implements OnInit, AfterViewInit {
 
   form: any = FormGroup;
-  reponseMessage: any;
+  responseMessage: any;
 
   constructor(
     private _formBuiler: FormBuilder,
@@ -41,15 +41,15 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
 
     this._userService.changePassword(data).subscribe({
       next: (response: any) => {
-        this.reponseMessage = response?.message;
-        this._snackbarService.openSnackBar(this.reponseMessage, 'success');
+        this.responseMessage = response?.message;
+        this._snackbarService.openSnackBar(this.responseMessage, 'success');
       },
       error: (err) => {
 
         console.log(err);
 
-        this.reponseMessage = err.error?.message || GlobalConstants.genericError;
-        this._snackbarService.openSnackBar(this.reponseMessage, GlobalConstants.error);
+        this.responseMessage = err.error?.message || GlobalConstants.genericError;
+        this._snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
       },
       complete: () => {
         this._ngxService.stop();

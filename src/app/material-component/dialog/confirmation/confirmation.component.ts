@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ConfirmationComponent implements OnInit {
 
-  onEmitStatusChange: any = new EventEmitter();
+  onEmitStatusChange: EventEmitter<any> = new EventEmitter<any>();
   details: any = {};
 
   constructor(

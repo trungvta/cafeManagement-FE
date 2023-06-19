@@ -28,4 +28,9 @@ export class CategoryService {
     const url = this.url + '/category/update';
     return this._httpClient.patch(url, data);
   }
+
+  delete(id: number): Observable<any> {
+    const url = this.url + '/category/delete/' + id;
+    return this._httpClient.delete(url);
+  }
 }
