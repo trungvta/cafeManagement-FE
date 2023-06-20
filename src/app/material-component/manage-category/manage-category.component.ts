@@ -91,19 +91,19 @@ export class ManageCategoryComponent implements OnInit {
   handleDeleteAction(element: any): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      message: 'delete' + element.name + 'product'
+      message: 'delete' + element.name + 'category'
     };
 
     const dialogRef = this._dialog.open(ConfirmationComponent, dialogConfig);
 
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((_: any) => {
       this._ngxService.start();
-      this.deleteProduct(element.id);
+      this.delete(element.id);
       dialogRef.close();
     })
   }
 
-  deleteProduct(id: number): void {
+  delete(id: number): void {
     this._categoryService.delete(id).subscribe({
       next: (response: any) => {
         this.responseMessage = response?.message;

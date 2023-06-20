@@ -115,7 +115,7 @@ export class ManageProductComponent implements OnInit {
       error: (err) => {
         this._ngxService.stop();
         this.responseMessage = err.error?.message || GlobalConstants.genericError;
-        this._snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error)
+        this._snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
       },
       complete: () =>{ 
         this._ngxService.stop();
@@ -125,6 +125,27 @@ export class ManageProductComponent implements OnInit {
   }
 
   onChange(status: any, id: number): void {
+    let data = {
+      status: status.toString(),
+      id: id
+    };
 
+    this._ngxService.start();
+
+    this._productService.updateStatus(data).subscribe({
+      next: (response) => {
+        this.responseMessage = response?.message;
+        this._snackbarService.openSnackBar(this.responseMessage, GlobalConstants.success);
+      },
+      error: (err) => {
+        this._ngxService.stop();
+        this.responseMessage = err.error?.message || GlobalConstants.genericError;
+        this._snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
+      },
+      complete: () => {
+        this._ngxService.stop();
+        this.tableData();
+      }
+    })
   }
 }

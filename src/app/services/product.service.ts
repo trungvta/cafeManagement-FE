@@ -24,8 +24,24 @@ export class ProductService {
     return this._httpClient.get(url);
   }
 
+  getByCategory(id: number) {
+    const url = this.url + '/product/getByCategory/' + id;
+    return this._httpClient.get(url);
+    
+  }
+
+  getById(id: number) {
+    const url = this.url + '/product/getById/' + id;
+    return this._httpClient.get(url);
+  }
+
   update(data: any): Observable<any> {
     const url = this.url + '/product/update';
+    return this._httpClient.patch(url, data);
+  }
+
+  updateStatus(data: any): Observable<any> {
+    const url = this.url + '/product/updateStatus';
     return this._httpClient.patch(url, data);
   }
 

@@ -16,6 +16,7 @@ import { ConfirmationComponent } from './dialog/confirmation/confirmation.compon
 import { ManageCategoryComponent } from './manage-category/manage-category.component';
 import { ProductComponent } from './dialog/product/product.component';
 import { ManageProductComponent } from './manage-product/manage-product.component';
+import { ManageOrderComponent } from './manage-order/manage-order.component';
 
 
 console.log('MaterialComponentsModule');
@@ -40,6 +41,7 @@ console.log('MaterialComponentsModule');
     ManageCategoryComponent,
     ProductComponent,
     ManageProductComponent,
+    ManageOrderComponent,
   ],
   entryComponents: []
 })
