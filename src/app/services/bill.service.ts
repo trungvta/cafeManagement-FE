@@ -21,7 +21,7 @@ export class BillService {
 
   getPDF(data: any): Observable<any> {
     const url = this.url + '/getPDF';
-    return this._httpClient.post(url, data);
+    return this._httpClient.post(url, data, { responseType: 'blob'});
   }
 
   getBills(): Observable<any> {

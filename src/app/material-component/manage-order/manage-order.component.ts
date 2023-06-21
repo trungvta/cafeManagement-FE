@@ -100,21 +100,19 @@ export class ManageOrderComponent implements OnInit, OnDestroy {
   }
 
   setQuantity(value: any): void {
-    console.log(value);
-    
     const quantity = this.manageOrderForm.controls['quantity'];
     const price = this.manageOrderForm.controls['price'];
     const total = this.manageOrderForm.controls['total'];
 
     if(quantity.value > 0) {
-      total.setValue(quantity * price);
+      total.setValue(quantity.value * price.value);
     }
     else if (quantity.value != '') {
       quantity.setValue('1');
-      total.setValue(quantity * price);
+      total.setValue(quantity.value * price.value.value);
     }
 
-    price.setValue(quantity * price);
+    total.setValue(quantity.value * price.value);
   }
 
   validateProductAdd(): any {
@@ -134,8 +132,13 @@ export class ManageOrderComponent implements OnInit, OnDestroy {
   }
 
   add(dataForm: any): void {
+    console.log('dataForm', dataForm);
+
     let formData = dataForm.value;
     let productName = this.dataSource.find((e: { id: number }) => e.id == formData.product.id);
+
+    console.log(productName);
+
     if(productName === undefined) {
       this.totalAmount = this.totalAmount * formData.total;
       this.dataSource.push({
@@ -148,8 +151,9 @@ export class ManageOrderComponent implements OnInit, OnDestroy {
       });
 
       this.dataSource = [...this.dataSource];
-      this._snackbarService.openSnackBar(GlobalConstants.productExistError, GlobalConstants.error);
     }
+    else
+    this._snackbarService.openSnackBar(GlobalConstants.productExistError, GlobalConstants.error);
   }
 
   handleDeleteAction(value: any, element: any): void {
@@ -162,7 +166,7 @@ export class ManageOrderComponent implements OnInit, OnDestroy {
     console.log(dataForm)
     let formData = dataForm.value;
     let data = {
-      namee: formData.name,
+      name: formData.name,
       email: formData.email,
       contactNumber: formData.contactNumber,
       paymentMethod: formData.paymentMethod,
@@ -172,8 +176,12 @@ export class ManageOrderComponent implements OnInit, OnDestroy {
 
     this._ngxService.start();
 
+    console.log('submitAction', data);
+
     this._billService.generateReport(data).subscribe({
       next: (response: any) => {
+        console.log(response);
+
         this.downloadFile(response?.uuid);
         this.manageOrderForm.reset();
         this.dataSource = [];
@@ -191,21 +199,28 @@ export class ManageOrderComponent implements OnInit, OnDestroy {
   }
 
   downloadFile(fileName: any): any {
+    console.log('fileName', fileName);
+
     let data = {
       uuid: fileName
     };
 
     this._billService.getPDF(data).subscribe({
       next: (response: any) => {
-        saveAs(response, fileName + '.pdf');
+
+        console.log('getPDF', response);
+
+        const blob = new Blob([response], { type: 'application/pdf' });
+
+        saveAs(blob, fileName + '.pdf');
       },
       error: (err) => {
-
+        console.log('error', err);
       },
       complete: () => {
         this._ngxService.stop();
       }
-    })
+    });
   }
 
   getCategorys(): void {

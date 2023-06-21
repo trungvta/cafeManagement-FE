@@ -137,6 +137,14 @@
         </div>
     </form>
 
+    <mat-card>
+        <button mat-flat-button color="primary"
+            [disabled]="validateProductAdd()"
+            (click)="add(manageOrderForm)">
+            Add Product
+        </button>
+    </mat-card>
+
     <hr>
 
     <div class="responsive_table">
@@ -158,7 +166,7 @@
                 <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
             </ng-contaiiner>
             <ng-contaiiner matColumnDef="total">
-                <th mat-header-cell *matHeaderCellDef>total</th>
+                <th mat-header-cell *matHeaderCellDef>Sub total</th>
                 <td mat-cell *matCellDef="let element">{{ element.total }}</td>
             </ng-contaiiner>
             <ng-contaiiner matColumnDef="edit">
